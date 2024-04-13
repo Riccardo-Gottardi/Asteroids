@@ -12,8 +12,9 @@
 #define WIDTH 800
 #define HEIGHT 800
 #define PI 3.1415926f
-#define INPUT_ACCELERATION 150.0f
-#define MAX_VELOCITY 200.0f
+#define INPUT_ACCELERATION 200.0f
+#define MAX_VELOCITY 275.0f
+#define BASE_PROJECTILE_VELOCITY 500.0f
 
 struct mouse {
     int x;

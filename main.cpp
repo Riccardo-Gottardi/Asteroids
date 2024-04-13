@@ -2,7 +2,7 @@
 #include "SpaceShip.h"
 #include "Asteroid.h"
 
-void EventManager(bool* quit, SpaceShip& spaceship, mouse* mouse);
+void EventManager(bool* quit, SpaceShip *spaceship, mouse* mouse);
 void UpdateDeltaTime(float* delta_time, unsigned long* current_ticks, unsigned long* last_ticks);
 
 int main() {
@@ -11,8 +11,8 @@ int main() {
         .y = 0
     };
 
-    SpaceShip spaceship;
-    Asteroid asteroid(3);
+    auto *spaceShip = new SpaceShip();
+    auto asteroid = new Asteroid(3);
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == -1) {
         perror("SDL_Init()");
@@ -44,20 +44,18 @@ int main() {
         UpdateDeltaTime(&delta_time, &current_ticks, &last_ticks);
 
         //Event handling
-        EventManager(&quit, spaceship, &mouse);
+        EventManager(&quit, spaceShip, &mouse);
 
-        spaceship.update(mouse, delta_time);
-        asteroid.update(delta_time);
+        spaceShip->update(mouse, delta_time);
+        asteroid->update(delta_time);
 
         SDL_SetRenderDrawColor(ren, 10, 10, 30, 255);
         SDL_RenderClear(ren);
 
-        spaceship.draw(ren);
-        asteroid.draw(ren);
+        spaceShip->draw(ren);
+        asteroid->draw(ren);
 
         SDL_RenderPresent(ren);
-
-        // UpdateSpaceship(&spaceship);
 
         SDL_Delay(1000/60);
     }
@@ -69,7 +67,7 @@ int main() {
 }
 
 
-void EventManager(bool* quit, SpaceShip& spaceship, mouse* mouse) {
+void EventManager(bool* quit, SpaceShip *spaceShip, mouse* mouse) {
     SDL_Event e;
     const unsigned char* keyboardState = SDL_GetKeyboardState(nullptr);
     long click = SDL_GetMouseState(&(mouse->x), &(mouse->y));
@@ -84,11 +82,11 @@ void EventManager(bool* quit, SpaceShip& spaceship, mouse* mouse) {
         }
     }
     if(keyboardState[SDL_SCANCODE_ESCAPE]) *quit = true;
-    if(keyboardState[SDL_SCANCODE_W] || keyboardState[SDL_SCANCODE_UP]) spaceship.setUp(true);
-    if(keyboardState[SDL_SCANCODE_S] || keyboardState[SDL_SCANCODE_DOWN]) spaceship.setDown(true);
-    if(keyboardState[SDL_SCANCODE_A] || keyboardState[SDL_SCANCODE_LEFT]) spaceship.setLeft(true);
-    if(keyboardState[SDL_SCANCODE_D] || keyboardState[SDL_SCANCODE_RIGHT]) spaceship.setRight(true);
-    if(keyboardState[SDL_SCANCODE_SPACE] || click == 1) spaceship.setShoot(true);
+    if(keyboardState[SDL_SCANCODE_W] || keyboardState[SDL_SCANCODE_UP]) spaceShip->setUp(true);
+    if(keyboardState[SDL_SCANCODE_S] || keyboardState[SDL_SCANCODE_DOWN]) spaceShip->setDown(true);
+    if(keyboardState[SDL_SCANCODE_A] || keyboardState[SDL_SCANCODE_LEFT]) spaceShip->setLeft(true);
+    if(keyboardState[SDL_SCANCODE_D] || keyboardState[SDL_SCANCODE_RIGHT]) spaceShip->setRight(true);
+    if(keyboardState[SDL_SCANCODE_SPACE] || click == 1) spaceShip->setShoot(true);
 }
 
 void UpdateDeltaTime(float* delta_time, unsigned long* current_ticks, unsigned long* last_ticks) {

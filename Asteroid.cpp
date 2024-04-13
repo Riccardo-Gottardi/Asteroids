@@ -19,7 +19,6 @@ Asteroid::Asteroid(int dim) {
     this->center[1] = 100.0f;
     this->indices = (int*)malloc(sizeof(int) * 3 * this->sides);
     this->generateShape(dis, gen);
-    this->dir = (float*)malloc(sizeof(float) * 2);
     this->generateDir(dis, gen);
     this->v = 60.0f + (float)dis(gen) * 50.0f;
 }
@@ -71,7 +70,7 @@ void Asteroid::draw(SDL_Renderer* ren) {
         points[i] = {this->center[0] + this->edges.at(2*i), this->center[1] + this->edges.at(2*i + 1)};
     }
     points[this->sides] = {this->center[0] + this->edges.at(0), this->center[1] + this->edges.at(1)};
-    SDL_SetRenderDrawColor(ren, 200, 200, 200, 1);
+    SDL_SetRenderDrawColor(ren, 200, 200, 200, 255);
     SDL_RenderDrawLinesF(ren, points, this->sides + 1);
 
 }

@@ -11,7 +11,9 @@ add_executable(Asteroids main.cpp
         Asteroid.cpp
         Asteroid.h
         Projectile.cpp
-        Projectile.h)
+        Projectile.h
+        ProjectilesManager.cpp
+        ProjectilesManager.h)
 
 include(FindPkgConfig)
 find_package(SDL2 REQUIRED)
